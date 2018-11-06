@@ -1,15 +1,21 @@
 # {{ ansible_managed }}
 
-# The following UserId and LicenseKey are required placeholders:
+# The following AccountID and LicenseKey are required placeholders:
+{% if maxmind_update_accountid %}
+AccountID {{ maxmind_update_accountid }}
+{% elif maxmind_update_userid %}
 UserId {{ maxmind_update_userid }}
+{% endif %}
 LicenseKey {{ maxmind_update_licensekey }}
 
 # Include one or more of the following ProductIds:
 # * GeoLite2-City - GeoLite 2 City
 # * GeoLite2-Country - GeoLite2 Country
-# * GeoLite-Legacy-IPv6-City - GeoLite Legacy IPv6 City
-# * GeoLite-Legacy-IPv6-Country - GeoLite Legacy IPv6 Country
 # * 506 - GeoLite Legacy Country
 # * 517 - GeoLite Legacy ASN
 # * 533 - GeoLite Legacy City
+{% if maxmind_update_edition_ids %}
+EditionIDs{% for item in maxmind_update_edition_ids %} {{ item }}{% endfor %}
+{% elif maxmind_update_product_ids %}
 ProductIds{% for item in maxmind_update_product_ids %} {{ item }}{% endfor %}
+{% endif %}
